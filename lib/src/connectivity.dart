@@ -217,10 +217,10 @@ class Connectivity extends Stream<InetConnectivityState> {
       _lastConnectivityPlusState = state;
 
       _connectivityPlusStreamController.add(state);
-    }
 
     _handleInetConnectivityEvent(
         _composeInetConnectivityStateByConnectivityPlusState(state));
+    }
   }
 
   void _handleInetConnectivityEvent(InetConnectivityState state) {
