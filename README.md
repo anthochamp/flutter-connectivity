@@ -1,6 +1,7 @@
 # connectivity_plus extended with Internet Connectivity
 
 This package extends the [connectivity_plus](https://pub.dev/packages/connectivity_plus) plugin :
+
 - with Internet Connectivity state (accessible on-demand or via a change stream),
 - with a fix that refresh connectivity when an Android app resumes from background.
 - with a stateful state of both the connectivity_plus and Internet connectivity states (with some limitations, see *Important note on Internet Connectivity Stream* below).
@@ -69,13 +70,14 @@ Connectivity().listen((state) {
 
 ## Important note on Internet Connectivity Stream
 
-Detecting Internet connectivity changes without a constant background test is a tricky business. 
+Detecting Internet connectivity changes without a constant background test is a tricky business.
 
 ### Detecting Internet access
 
 This package starts a background test (ONLY) when there's no Internet connectivity, so it can guarantee that when the app gets back online, you'll be quickly informed of it.
 
-The speed at which you'll be informed of it depends on the network configuration : 
+The speed at which you'll be informed of it depends on the network configuration :
+
 - If the device changes network configuration (going from a 4G network to a Wifi network for example), Internet detection will be almost instantaneous.
 - Whereas if the device is connected to Internet via a router (eg. connected to Wifi), but the Wifi network itself has no Internet access, it might take as much time as the duration you've specified in the `backgroundChecksInterval` configuration (which is 0 by default).
 
