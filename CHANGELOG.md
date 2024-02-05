@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Upgrade ac_inet_connectivity_checker package to 0.1.4
+
 ## 0.1.1
 
 - Fix: Avoid unnecessary Internet connectivity status flickering (internet -> connected -> internet) on forced app resume update (Android only). Would only happen when connected to Internet before app was put in background, and still connected to Internet when app was resumed.

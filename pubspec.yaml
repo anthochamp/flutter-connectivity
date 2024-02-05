@@ -1,6 +1,6 @@
 name: ac_connectivity
 description: Stateful connectivity_plus extended with Internet connectivity
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/anthochamp/flutter-connectivity
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   ac_dart_essentials: ^0.2.1
-  ac_inet_connectivity_checker: ^0.1.2
+  ac_inet_connectivity_checker: ^0.1.4
   ac_flutter_essentials: ^0.1.0
   async: ^2.10.0
   connectivity_plus:
