@@ -4,4 +4,4 @@
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-typedef ConnectivityPlusState = ConnectivityResult;
+typedef ConnectivityPlusState = List<ConnectivityResult>;

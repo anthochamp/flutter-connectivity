@@ -1,3 +1,12 @@
+## 0.2.0
+
+- Update connectivity_plus package dependency restriction to >=6.0.0
+
+BREAKING CHANGES:
+
+- `ConnectivityPlusState` type has changed from `ConnectivityResult` to `List<ConnectivityResult>`
+- [connectivity_plus 6.0.1](https://pub.dev/packages/connectivity_plus/changelog#601) breaking changes.
+
 ## 0.1.3
 
 - Upgrade ac_lints package to 0.3.0

@@ -185,7 +185,7 @@ class Connectivity extends Stream<InetConnectivityState> {
       _composeInetConnectivityStateByConnectivityPlusState(
     ConnectivityPlusState state,
   ) {
-    if (state == ConnectivityPlusState.none) {
+    if (state.contains(connectivity_plus.ConnectivityResult.none)) {
       return InetConnectivityState.disconnected;
     } else {
       return kIsWeb
