@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   ac_dart_essentials: ^0.2.1
-  ac_inet_connectivity_checker: ^0.1.4
+  ac_inet_connectivity_checker: ^0.2.0
   ac_flutter_essentials: ^0.1.0
   async: ^2.10.0
   connectivity_plus: ">=6.0.0"
