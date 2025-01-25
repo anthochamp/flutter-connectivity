@@ -1,3 +1,8 @@
+## 0.3.0
+
+- Update connectivity_plus package dependency restriction to ^6.0.0
+- Update example dependencies and index.html
+
 ## 0.2.1
 
 - Upgrade ac_lints package to 0.3.1
