@@ -18,10 +18,12 @@ import 'inet_connectivity_state.dart';
 
 class Connectivity extends Stream<InetConnectivityState> {
   static final defaultInetEndpoints = List.generate(
-      min(_randomIpV4Endpoints.length, _randomIpV6Endpoints.length) * 2,
-      (index) => index % 2 == 0
-          ? _randomIpV6Endpoints[index >> 1]
-          : _randomIpV4Endpoints[(index - 1) >> 1]);
+    min(_randomIpV4Endpoints.length, _randomIpV6Endpoints.length) * 2,
+    (index) =>
+        index % 2 == 0
+            ? _randomIpV6Endpoints[index >> 1]
+            : _randomIpV4Endpoints[(index - 1) >> 1],
+  );
 
   static final _randomIpV4Endpoints = [...kRootNameServersIpV4Endpoints]
     ..shuffle();
@@ -32,9 +34,9 @@ class Connectivity extends Stream<InetConnectivityState> {
   factory Connectivity() => _instance;
 
   Connectivity._() {
-    connectivity_plus.Connectivity()
-        .onConnectivityChanged
-        .listen(_handleConnectivityPlusEvent);
+    connectivity_plus.Connectivity().onConnectivityChanged.listen(
+      _handleConnectivityPlusEvent,
+    );
 
     if (defaultTargetPlatform == TargetPlatform.android) {
       // on Android, when app is in the background it might not receive
@@ -43,8 +45,8 @@ class Connectivity extends Stream<InetConnectivityState> {
       _appLifecycleStream
           .where((event) => event == AppLifecycleState.resumed)
           .listen((_) async {
-        await checkConnectivityPlusState();
-      });
+            await checkConnectivityPlusState();
+          });
     }
 
     unawaited(checkConnectivityPlusState());
@@ -122,9 +124,11 @@ class Connectivity extends Stream<InetConnectivityState> {
     if (kIsWeb) {
       final completer = CancelableCompleter<InetConnectivityState>();
 
-      completer.complete(connectivity_plus.Connectivity()
-          .checkConnectivity()
-          .then(_composeInetConnectivityStateByConnectivityPlusState));
+      completer.complete(
+        connectivity_plus.Connectivity().checkConnectivity().then(
+          _composeInetConnectivityStateByConnectivityPlusState,
+        ),
+      );
 
       completer.operation.then(_handleInetConnectivityEvent);
 
@@ -138,14 +142,16 @@ class Connectivity extends Stream<InetConnectivityState> {
 
     final operation = checker.cancelableOperation
         .thenOperation<InetConnectivityState>((success, completer) {
-      if (success) {
-        completer.complete(InetConnectivityState.internet);
-      } else {
-        completer.complete(connectivity_plus.Connectivity()
-            .checkConnectivity()
-            .then(_composeInetConnectivityStateByConnectivityPlusState));
-      }
-    });
+          if (success) {
+            completer.complete(InetConnectivityState.internet);
+          } else {
+            completer.complete(
+              connectivity_plus.Connectivity().checkConnectivity().then(
+                _composeInetConnectivityStateByConnectivityPlusState,
+              ),
+            );
+          }
+        });
 
     operation.then(_handleInetConnectivityEvent);
 
@@ -164,11 +170,12 @@ class Connectivity extends Stream<InetConnectivityState> {
   /// might loose access to Internet but we would have no way of knowing
   /// without making constant background checks (which this package does not).
   void notifyChange() {
-    _updateStatusOperation ??=
-        checkInetConnectivityState(timeout: fastInetTestTimeout)
-          ..valueOrCancellation().then((_) {
-            _updateStatusOperation = null;
-          });
+    _updateStatusOperation ??= checkInetConnectivityState(
+        timeout: fastInetTestTimeout,
+      )
+      ..valueOrCancellation().then((_) {
+        _updateStatusOperation = null;
+      });
   }
 
   @override
@@ -177,12 +184,15 @@ class Connectivity extends Stream<InetConnectivityState> {
     Function? onError,
     void Function()? onDone,
     bool? cancelOnError,
-  }) =>
-      _inetConnectivityStreamController.stream.listen(onData,
-          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }) => _inetConnectivityStreamController.stream.listen(
+    onData,
+    onError: onError,
+    onDone: onDone,
+    cancelOnError: cancelOnError,
+  );
 
   static InetConnectivityState
-      _composeInetConnectivityStateByConnectivityPlusState(
+  _composeInetConnectivityStateByConnectivityPlusState(
     ConnectivityPlusState state,
   ) {
     if (state.contains(connectivity_plus.ConnectivityResult.none)) {
@@ -197,9 +207,9 @@ class Connectivity extends Stream<InetConnectivityState> {
   void _startBackgroundConnectivityChecker() {
     _backgroundConnectivityChecker ??= CancelableTimer.periodic(
       backgroundChecksInterval,
-      (_) => checkInetConnectivityState(
-        timeout: backgroundCheckTimeout,
-      ).then((state) {
+      (_) => checkInetConnectivityState(timeout: backgroundCheckTimeout).then((
+        state,
+      ) {
         if (state != InetConnectivityState.connected) {
           _backgroundConnectivityChecker?.cancel();
           _backgroundConnectivityChecker = null;
@@ -219,7 +229,8 @@ class Connectivity extends Stream<InetConnectivityState> {
       _connectivityPlusStreamController.add(state);
 
       _handleInetConnectivityEvent(
-          _composeInetConnectivityStateByConnectivityPlusState(state));
+        _composeInetConnectivityStateByConnectivityPlusState(state),
+      );
     }
   }
 
