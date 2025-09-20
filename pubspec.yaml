@@ -11,7 +11,7 @@ dependencies:
   ac_inet_connectivity_checker: ^0.3.0
   ac_flutter_essentials: ^0.1.0
   async: ^2.10.0
-  connectivity_plus: ^6.0.0
+  connectivity_plus: ^7.0.0
   flutter:
     sdk: flutter
 
