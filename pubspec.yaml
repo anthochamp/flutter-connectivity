@@ -1,6 +1,6 @@
 name: ac_connectivity
 description: Stateful connectivity_plus extended with Internet connectivity
-version: 0.4.0
+version: 0.5.0
 repository: https://github.com/anthochamp/flutter-connectivity
 
 environment:

@@ -1,21 +1,25 @@
 # Changelog
 
-## 0.4.0
+## [0.5.0] - 2025-10-17
+
+- Update connectivity_plus package dependency restriction to ^7.0.0
+
+## [0.4.0] - 2025-05-02
 
 - Update SDK environment requirement (>= 3.7.0 && <4.0.0)
 - Update ac_inet_connectivity_checker dependency to 0.3.0
 
-## 0.3.0
+## [0.3.0]
 
 - Update ac_inet_connectivity_checker dependency to 0.2.0
 - Update connectivity_plus package dependency restriction to ^6.0.0
 - Update example dependencies and index.html
 
-## 0.2.1
+## [0.2.1]
 
 - Upgrade ac_lints package to 0.3.1
 
-## 0.2.0
+## [0.2.0]
 
 - Update connectivity_plus package dependency restriction to >=6.0.0
 
@@ -26,15 +30,15 @@ BREAKING CHANGES:
 - [connectivity_plus 6.0.1](https://pub.dev/packages/connectivity_plus/changelog#601)
 breaking changes.
 
-## 0.1.3
+## [0.1.3]
 
 - Upgrade ac_lints package to 0.3.0
 
-## 0.1.2
+## [0.1.2]
 
 - Upgrade ac_inet_connectivity_checker package to 0.1.4
 
-## 0.1.1
+## [0.1.1]
 
 - Fix: Avoid unnecessary Internet connectivity status flickering (internet ->
 connected -> internet) on forced app resume update (Android only). Would only
@@ -46,6 +50,6 @@ connected to Internet when app was resumed.
 - Upgrade ac_lints package to 0.2.1
 - Remove restriction for connectivity_plus's package version
 
-## 0.1.0
+## [0.1.0]
 
 - Initial release
