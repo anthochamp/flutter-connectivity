@@ -1,5 +1,18 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- Initial test suite (9 tests): `InetConnectivityState` enum semantics and
+  `Connectivity.defaultInetEndpoints` static field verification
+- Improved doc comments on `checkInetConnectivityState`, `checkConnectivityPlusState`, and
+  `getConnectivityPlusStream`
+
 ## [0.5.0] - 2025-10-17
 
 - Update connectivity_plus package dependency restriction to ^7.0.0

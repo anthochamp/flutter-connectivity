@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2023 - 2024 Anthony Champagne <dev@anthonychampagne.fr>
+// SPDX-FileCopyrightText: © 2023 - 2026 Anthony Champagne <dev@anthonychampagne.fr>
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
@@ -66,8 +66,10 @@ class Connectivity extends Stream<InetConnectivityState> {
   /// if null, it will use the `defaultInetEndpoints` list.
   Iterable<InetEndpoint>? inetEndpoints;
 
-  /// Interval of Internet background checks (default is 0)
-  Duration backgroundChecksInterval = const Duration();
+  /// Interval between periodic Internet background checks.
+  ///
+  /// Set to [Duration.zero] (default) to disable background checks.
+  Duration backgroundChecksInterval = Duration.zero;
 
   /// Internet background check timeout (default is null)
   ///
@@ -96,14 +98,18 @@ class Connectivity extends Stream<InetConnectivityState> {
   InetConnectivityState? get lastInetConnectivityState =>
       _lastInetConnectivityState;
 
-  /// equivalent to connectivity_plus's `Connectivity.onConnectivityChanged`
-  /// although it guarantees that no two consecutives event are the same,
-  /// and that on Android, when app is back in foreground state, it will
-  /// fire an event if state has changed.
+  /// Returns the broadcast stream of [ConnectivityPlusState] changes.
+  ///
+  /// Equivalent to `connectivity_plus`'s `Connectivity.onConnectivityChanged`,
+  /// except that consecutive duplicate states are suppressed and — on Android —
+  /// a fresh state is emitted when the app returns to the foreground.
   Stream<ConnectivityPlusState> getConnectivityPlusStream() =>
       _connectivityPlusStreamController.stream;
 
-  /// same as connectivity_plus's `Connectivity.checkConnectivity`
+  /// Performs a fresh `connectivity_plus` check and updates the internal state.
+  ///
+  /// Equivalent to calling `connectivity_plus`'s `Connectivity.checkConnectivity()`
+  /// and forwarding the result through this package's deduplication logic.
   Future<ConnectivityPlusState> checkConnectivityPlusState() {
     return connectivity_plus.Connectivity().checkConnectivity().then((state) {
       _handleConnectivityPlusEvent(state);
@@ -111,13 +117,19 @@ class Connectivity extends Stream<InetConnectivityState> {
     });
   }
 
-  /// Get a fresh value for internet connectivity state.
+  /// Performs a live Internet connectivity check and returns the result as a
+  /// [CancelableOperation].
   ///
-  /// If timeout is null, it will check for as long as the OS socket timeout
-  /// (usually 120s)
+  /// Attempts TCP connections to [inetEndpoints] (or [defaultInetEndpoints]
+  /// when unset). Returns [InetConnectivityState.internet] if at least one
+  /// endpoint is reachable, or falls back to the `connectivity_plus` state
+  /// when none are.
   ///
-  /// NB. For Flutter on the Web, it won't make a network, it will deduce
-  /// the state based on a fresh connectivity_plus value.
+  /// Pass [timeout] to limit how long each TCP attempt waits; when `null`
+  /// the OS socket timeout applies (typically 120 s).
+  ///
+  /// On Flutter Web, no TCP probes are made — the result is derived from a
+  /// fresh `connectivity_plus` check instead.
   CancelableOperation<InetConnectivityState> checkInetConnectivityState({
     Duration? timeout,
   }) {
